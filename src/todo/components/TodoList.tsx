@@ -1,18 +1,11 @@
 import React, { useState } from "react";
 import '../../index.css';
 import TodoItem from "./TodoItem";
+import { items } from "./const";
 
 const ToDo = () => {
     const [name, setName] = useState('');
-    const [todos, setTodos] = useState([{ 
-        id: Date.now(), 
-        title: 'Task 1', 
-        description: 'Title of task',
-        isChecked: false, 
-        createdAt: new Date(), 
-        updatedAt: new Date(), 
-        isEdited: false 
-    }]);
+    const [todos, setTodos] = useState(items);
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
 
@@ -24,8 +17,8 @@ const ToDo = () => {
             title,
             description,
             isChecked: false,
-            createdAt: new Date(),
-            updatedAt: new Date(),
+            createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString(),
             isEdited: false
         }
         setTodos(prev => [...prev, newTodo]);
@@ -44,7 +37,7 @@ const ToDo = () => {
 
     const editTodo = (id, newTitle, newDescription) => {
         setTodos((prev) => 
-            prev.map((todo) => (todo.id === id ? {...todo, title: newTitle, description: newDescription || todo.description, updatedAt: new Date(), isEdited: true} : todo))
+            prev.map((todo) => (todo.id === id ? {...todo, title: newTitle, description: newDescription || todo.description, updatedAt: new Date().toISOString(), isEdited: true} : todo))
         )
     }
 
