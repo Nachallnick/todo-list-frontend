@@ -1,13 +1,6 @@
 import React, { useState } from "react";
+import { ITodoItem } from "./const";
 
-export interface ITodoItem {
-    id: number;
-    title: string;
-    description: string;
-    isChecked: boolean;
-    isEdited: boolean;
-    updatedAt: string;
-}
 
 interface TodoItemProps {
     todo: ITodoItem;

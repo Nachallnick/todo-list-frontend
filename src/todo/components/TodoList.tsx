@@ -1,26 +1,19 @@
 import React, { useState } from "react";
 import '../../index.css';
 import TodoItem from "./TodoItem";
-import { items } from "./const";
+import { DEFAULT_TODO_ITEM } from "./const";
+import { createNewTodo } from "./const"
 
 const ToDo = () => {
     const [name, setName] = useState('');
-    const [todos, setTodos] = useState(items);
+    const [todos, setTodos] = useState(DEFAULT_TODO_ITEM);
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
 
     const handleAddTask = e => {
        if (e.key === 'Enter' && title.trim()) {
         e.preventDefault();
-        const newTodo = {
-            id: Date.now(),
-            title,
-            description,
-            isChecked: false,
-            createdAt: new Date().toISOString(),
-            updatedAt: new Date().toISOString(),
-            isEdited: false
-        }
+        const newTodo = createNewTodo(title, description)
         setTodos(prev => [...prev, newTodo]);
         setTitle('');
         setDescription('')
