@@ -28,6 +28,8 @@ const TodoItem: React.FC<TodoItemProps> = ({ todo, index, setCheckedToDo, remove
 
     const handleToggleEdit = () => {       
        setIsEditing(!isEditing)
+       setEditText(todo.title)
+       setEditDescription(todo.description)
     };
 
     const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -46,7 +48,8 @@ const TodoItem: React.FC<TodoItemProps> = ({ todo, index, setCheckedToDo, remove
     }
 
     return (
-        <>     
+        <>
+        <div className="todo-item">
          <div className="todo-content">
              {isEditing ? (
                  <> 
@@ -74,6 +77,7 @@ const TodoItem: React.FC<TodoItemProps> = ({ todo, index, setCheckedToDo, remove
         </>
     )}
 </div>
+            </div>     
         </>
      );
     }

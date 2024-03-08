@@ -1,16 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import '../../index.css';
 import TodoItem from "./TodoItem";
-import { DEFAULT_TODO_ITEM } from "./const";
-import { createNewTodo } from "./const"
+import { DEFAULT_TODO_ITEM, createNewTodo } from "./const";
+
 
 const ToDo = () => {
-    const [name, setName] = useState('');
+    
     const [todos, setTodos] = useState(DEFAULT_TODO_ITEM);
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
 
-    const handleAddTask = e => {
+
+    useEffect(() => {
+        localStorage.setItem('todos', JSON.stringify(todos))
+    }, [todos])
+
+    const handleAddTask = (e) => {
        if (e.key === 'Enter' && title.trim()) {
         e.preventDefault();
         const newTodo = createNewTodo(title, description)
@@ -20,7 +25,7 @@ const ToDo = () => {
        }
     }
 
-    const setCheckedToDo = id => {
+    const setCheckedToDo = (id) => {
         setTodos(prev => prev.map(todo => todo.id === id ? { ...todo, isChecked: !todo.isChecked } : todo));
     }
 
@@ -33,6 +38,36 @@ const ToDo = () => {
             prev.map((todo) => (todo.id === id ? {...todo, title: newTitle, description: newDescription || todo.description, updatedAt: new Date().toISOString(), isEdited: true} : todo))
         )
     }
+
+    const removeAllTodos = () => {
+        setTodos([])
+    }
+
+    const markAllTodosAsChecked = () => {
+        setTodos(prevTodos => 
+            prevTodos.map(todo => ({...todo, isChecked: true})))
+    }
+
+    useEffect(() => {
+        const storedTodos = localStorage.getItem("todos")
+        if(storedTodos) {
+            setTodos(JSON.parse(storedTodos))
+        }
+    }, [])
+
+    const memoizedTodoItem = useMemo(() => 
+    todos.map((todo, index) => (
+        <TodoItem
+            key={todo.id}
+            todo={todo}
+            index={index + 1}
+            setCheckedToDo={setCheckedToDo}
+            removeTodo={removeTodo}
+            editTodo={editTodo}
+            />
+    )),
+    [todos]
+    )
 
     return (
         <>
@@ -53,18 +88,11 @@ const ToDo = () => {
                     placeholder="Enter task description"
                 />
                 </div>
+                <button onClick={removeAllTodos}>Remove All todos</button>
+                <button onClick={markAllTodosAsChecked}>Mark All Todos As Checked</button>
             </div>
             <div className="todo-list">
-                {todos.map((todo, index) => (
-                    <TodoItem 
-                        key={todo.id}
-                        todo={todo}
-                        index={index + 1}
-                        setCheckedToDo={setCheckedToDo}
-                        removeTodo={removeTodo}
-                        editTodo={editTodo}
-                    />
-                ))}
+                {memoizedTodoItem}
             </div>
         </>
     );
