@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import '../../index.css';
 import TodoItem from "./TodoItem";
 import { DEFAULT_TODO_ITEM } from "./const";
 import { createNewTodo } from "./const"
+import * as React from "react";
+import {getList} from "../../api";
 
 const ToDo = () => {
     const [name, setName] = useState('');
@@ -36,6 +38,7 @@ const ToDo = () => {
 
     return (
         <>
+            <button onClick={() => getList().then(console.log).catch(console.error)}>Try api</button>
             <div className="top-bar">
                 <h1>Task application</h1>
                 <div className="input-group">
