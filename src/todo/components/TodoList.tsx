@@ -2,6 +2,7 @@ import React, { useState, useEffect, useMemo } from "react";
 import '../../index.css';
 import TodoItem from "./TodoItem";
 import { DEFAULT_TODO_ITEM, createNewTodo } from "./const";
+import { getList } from "./api";
 
 
 const ToDo = () => {
