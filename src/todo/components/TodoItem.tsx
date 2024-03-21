@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { ITodoItem } from "./const";
 
+import Button from '@mui/material/Button'
+import DeleteIcon from '@mui/icons-material/Delete';
+import MultilineTextFields from "../mui_appka/inpupts";
 
 interface TodoItemProps {
     todo: ITodoItem;
@@ -47,14 +50,19 @@ const TodoItem: React.FC<TodoItemProps> = ({ todo, index, setCheckedToDo, remove
         })
     }
 
+
     return (
         
         <div className="todo-item">
          <div className="todo-content">
              {isEditing ? (
                  <> 
-                     <input className="input-group" type="text" value={editText} onChange={handleTitleChange} />
-                     <textarea className="input-group" value={editDescription} onChange={handleDescriptionChange} />
+                     <MultilineTextFields 
+                        onTitleChange={handleTitleChange}
+                        onDescriptionChange={handleDescriptionChange}
+                        titleValue={editText}
+                        description={editDescription}
+                     />
                  </>
              ) : (
                  <>
@@ -68,12 +76,12 @@ const TodoItem: React.FC<TodoItemProps> = ({ todo, index, setCheckedToDo, remove
  
          <div className="buttons">
     {isEditing ? (
-        <button className="save" onClick={handleSave}>Save</button>
+        <Button className="save" onClick={handleSave}>Save</Button>
     ) : (
         <>
-            <button className="update" onClick={handleToggleEdit}>Update</button>
-            <button className={`toggle-btn ${todo.isChecked ? 'completed' : ''}`} onClick={() => setCheckedToDo(todo.id)}>Complete</button>
-            <button className="delete" onClick={() => removeTodo(todo.id)}>Delete</button>
+            <Button  className="update" onClick={handleToggleEdit}>Update</Button>
+            <Button className={`toggle-btn ${todo.isChecked ? 'completed' : ''}`} onClick={() => setCheckedToDo(todo.id)}>Complete</Button>
+            <Button variant="outlined" startIcon={<DeleteIcon />} className="delete" onClick={() => removeTodo(todo.id)}>Delete</Button>
         </>
     )}
 </div>

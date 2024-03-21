@@ -6,6 +6,12 @@
     --container-width: 90%;
 }
 
+
+body {
+    font-family: Roboto, Courier, monospace;
+}
+
+
 .top-bar {
     display: flex;
     justify-content: space-between;

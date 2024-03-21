@@ -3,6 +3,10 @@ import '../../index.css';
 import TodoItem from "./TodoItem";
 import { DEFAULT_TODO_ITEM, ITodoItem, createNewTodo } from "./const";
 import { getList } from "./api";
+import MultilineTextFields from "../mui_appka/inpupts";
+
+import Button from '@mui/material/Button'
+import DeleteIcon from '@mui/icons-material/Delete';
 
 
 const ToDo = () => {
@@ -85,24 +89,17 @@ const ToDo = () => {
             <div className="top-bar">
                 <h1>Task application</h1>
                 <form onSubmit={handleAddTask} className="input-group">
-                <input  
-                    type="text"
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
-                    
-                    placeholder="Enter the name of new task"
-                    autoFocus 
-                />
-                <textarea
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
-                    placeholder="Enter task description"
-                />
-                <button type="submit">Add task</button>
+               <MultilineTextFields 
+               onTitleChange={(e) => setTitle(e.target.value)}
+               onDescriptionChange={(e) => setDescription(e.target.value)}
+               titleValue={title}
+               description={description}
+               />
+                <Button type="submit">Add task</Button>
                 </form>
-                <button onClick={removeAllTodos}>Remove All todos</button>
-                <button onClick={markAllTodosAsChecked}>Mark All Todos As Checked</button>
-                <button onClick={async()=>{
+                <Button variant="outlined" startIcon={<DeleteIcon />} onClick={removeAllTodos}>Remove All todos</Button>
+                <Button  onClick={markAllTodosAsChecked}>Mark All Todos As Checked</Button>
+                <Button onClick={async()=>{
                     setIsLoading(true)
                     try{
                         const storedTodos = await getList()
@@ -115,7 +112,7 @@ const ToDo = () => {
                         setIsLoading(false)
                     }
            
-         }}>Import task</button>
+         }}>Import task</Button>
             </div>
             <div className="todo-list">
                 {isLoading ? <p>Loading...</p> : memoizedTodoItem}
