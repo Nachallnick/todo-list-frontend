@@ -1,6 +1,6 @@
 :root {
     --primary-color: rgba(213, 198, 178, 0.822);
-    --background-dark: rgba(42, 40, 40, 0.628);
+    --background-dark: rgba(44, 40, 40, 0.628);
     --button-active: rgb(30, 28, 28);
     --button-default: rgb(46, 44, 44);
     --container-width: 90%;
@@ -9,6 +9,7 @@
 
 body {
     font-family: Roboto, Courier, monospace;
+   
 }
 
 
@@ -27,28 +28,13 @@ h1 {
     color: var(--primary-color);
 }
 
-.input-group {
-    display: flex;
-    flex-direction: column;
-    max-width: 400px;
-    margin-left: 20px;
-    align-self: flex-end;
+
+
+.top-bar > button {
+    margin-right: 10px;
 }
 
-.input-group input[type="text"],
-.input-group textarea {
-    width: calc(100% - 30px);
-    max-width: 400px;
-    background-color: var(--background-dark);
-    color: var(--primary-color);
-    border-radius: 15px;
-    box-shadow: 0 3px 5px rgba(0, 0, 0, .1);
-    padding: 10px 15px;
-    border: none;
-    outline: none;
-    font-size: 12px;
-    margin-bottom: 8px;
-}
+
 
 
 

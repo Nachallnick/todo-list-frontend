@@ -1,125 +1,137 @@
-import React, { useState, useEffect, useMemo } from "react";
-import '../../index.css';
-import TodoItem from "./TodoItem";
-import { DEFAULT_TODO_ITEM, ITodoItem, createNewTodo } from "./const";
-import { getList } from "./api";
-import MultilineTextFields from "../mui_appka/inpupts";
+    import React, { useState, useEffect, useMemo } from "react";
+    import '../../index.css';
+    import TodoItem from "./TodoItem";
+    import { DEFAULT_TODO_ITEM, ITodoItem, createNewTodo } from "./const";
+    import { getList } from "./api";
+    import MultilineTextFields from "../mui_appka/inputs";
+    import { MarkAllTodosAsCheckedButtons } from "../mui_appka/buttons/buttonComplite";
+    import Button from '@mui/material/Button'
+    import DeleteIcon from '@mui/icons-material/Delete';
+    import { DeleteAllButtons } from "../mui_appka/buttons/deleteButtons";
 
-import Button from '@mui/material/Button'
-import DeleteIcon from '@mui/icons-material/Delete';
 
-
-const ToDo = () => {
-    
-    const [todos, setTodos] = useState<ITodoItem[]>([]);
-    const [title, setTitle] = useState('')
-    const [description, setDescription] = useState('')
-
-    const [isLoading, setIsLoading] = useState<boolean>(false)
-
-    console.log('isLoading::', isLoading)
-
-    useEffect(() => {
-        setIsLoading(true)
-        getList()
-            .then((storedTodos: ITodoItem[]) => {
-                if(storedTodos.length > 0) {
-                    setTodos(storedTodos)
-                }
-            })
-            .catch((error) => console.error('Failed to load todos:', error))
-            .finally(() => setIsLoading(false))
-    },[])
+    const ToDo = () => {
         
+        const [todos, setTodos] = useState<ITodoItem[]>([]);
+        const [title, setTitle] = useState('')
+        const [description, setDescription] = useState('')
 
-    useEffect(() => {
-        localStorage.setItem('todos', JSON.stringify(todos))
-    }, [todos])
+        const [isLoading, setIsLoading] = useState<boolean>(false)
 
-    const handleAddTask = (e: React.FormEvent) => {
-        e.preventDefault()
-       if (title.trim()) {
-       
-        const newTodo = createNewTodo(title, description)
-        setTodos(prev => [...prev, newTodo]);
-        setTitle('');
-        setDescription('')
-       }
-    }
+        console.log('isLoading::', isLoading)
 
-    const setCheckedToDo = (id: number) => {
-        setTodos(prev => prev.map(todo => todo.id === id ? { ...todo, isChecked: !todo.isChecked } : todo));
-    }
+        useEffect(() => {
+            setIsLoading(true)
+            getList()
+                .then((storedTodos: ITodoItem[]) => {
+                    if(storedTodos.length > 0) {
+                        setTodos(storedTodos)
+                    }
+                })  
+                .catch((error) => console.error('Failed to load todos:', error))
+                .finally(() => setIsLoading(false))
+        },[])
+            
 
-    const removeTodo = (id: number) => {
-        setTodos(todos.filter(todo => todo.id !== id));
-    }
+        useEffect(() => {
+            localStorage.setItem('todos', JSON.stringify(todos))
+        }, [todos])
 
-    const editTodo = (id: number, newTitle: string, newDescription: string) => {
-        setTodos((prev) => 
-            prev.map((todo) => (todo.id === id ? {...todo, title: newTitle, description: newDescription || todo.description, updatedAt: new Date().toISOString(), isEdited: true} : todo))
-        )
-    }
+        const handleAddTask = (e: React.FormEvent) => {
+            e.preventDefault()
+        if (title.trim()) {
+        
+            const newTodo = createNewTodo(title, description)
+            setTodos(prev => [...prev, newTodo]);
+            setTitle('');
+            setDescription('')
+        }
+        }
 
-    const removeAllTodos = () => {
-        setTodos([])
-    }
+        const setCheckedToDo = (id: number) => {
+            setTodos(prev => prev.map(todo => todo.id === id ? { ...todo, isChecked: !todo.isChecked } : todo));
+        }
 
-    const markAllTodosAsChecked = () => {
-        setTodos(prevTodos => 
-            prevTodos.map(todo => ({...todo, isChecked: true})))
-    }
+        const removeTodo = (id: number) => {
+            setTodos(todos.filter(todo => todo.id !== id));
+        }
 
-    const memoizedTodoItem = useMemo(() => 
-    todos.map((todo, index) => (
-        <TodoItem
-            key={todo.id}
-            todo={todo}
-            index={index + 1}
-            setCheckedToDo={setCheckedToDo}
-            removeTodo={removeTodo}
-            editTodo={editTodo}
-            />
-    )),
-    [todos, setCheckedToDo, removeTodo, editTodo]
-    )
+        const editTodo = (id: number, newTitle: string, newDescription: string) => {
+            setTodos((prev) => 
+                prev.map((todo) => (todo.id === id ? {...todo, title: newTitle, description: newDescription || todo.description, updatedAt: new Date().toISOString(), isEdited: true} : todo))
+            )
+        }
 
-    return (
-        <>
-            <div className="top-bar">
-                <h1>Task application</h1>
-                <form onSubmit={handleAddTask} className="input-group">
-               <MultilineTextFields 
-               onTitleChange={(e) => setTitle(e.target.value)}
-               onDescriptionChange={(e) => setDescription(e.target.value)}
-               titleValue={title}
-               description={description}
-               />
-                <Button type="submit">Add task</Button>
-                </form>
-                <Button variant="outlined" startIcon={<DeleteIcon />} onClick={removeAllTodos}>Remove All todos</Button>
-                <Button  onClick={markAllTodosAsChecked}>Mark All Todos As Checked</Button>
-                <Button onClick={async()=>{
+
+
+        const handleClick = async (action: string) => {
+            switch(action) {
+                case 'removeAll':
+                    setTodos([])
+                    break;
+                case 'markAllChecked':
+                    setTodos(prevTodos => prevTodos.map((todo) => ({...todo, isChecked: true})))
+                    break
+                case 'importTasks':
                     setIsLoading(true)
-                    try{
+                    try {
                         const storedTodos = await getList()
                         if (storedTodos.length > 0) {
                             setTodos(storedTodos)
                         }
                     } catch (error) {
-                        console.log('Failed to import tasks:', error)
+                        console.log('Failed to import task:', error)
                     } finally {
                         setIsLoading(false)
                     }
-           
-         }}>Import task</Button>
-            </div>
-            <div className="todo-list">
-                {isLoading ? <p>Loading...</p> : memoizedTodoItem}
-                
-            </div>
-        </>
-    );
-}
+                    break
+                default:
+                    console.log('Action not recognized')
+            }
+        }
 
-export default ToDo;
+
+        const memoizedTodoItem = useMemo(() => 
+        todos.map((todo, index) => (
+            <TodoItem
+                key={todo.id}
+                todo={todo}
+                index={index + 1}
+                setCheckedToDo={setCheckedToDo}
+                removeTodo={removeTodo}
+                editTodo={editTodo}
+                />
+        )),
+        [todos, setCheckedToDo, removeTodo, editTodo]
+        )
+
+        return (
+            <>
+                <div className="top-bar" style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap' }}>
+                    <h1>Task application</h1>
+                    
+                    <form onSubmit={handleAddTask} className="input-group" style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', flexWrap: 'wrap', flexGrow: 1 }}>
+                <MultilineTextFields 
+                            onTitleChange={(e) => setTitle(e.target.value)}
+                            onDescriptionChange={(e) => setDescription(e.target.value)}
+                            titleValue={title}
+                            description={description} isEditing={undefined}                />
+                    <Button type="submit">Add task</Button> 
+                    </form>
+                    
+                 <div className="buttons">
+                    <DeleteAllButtons onClick={() => handleClick('removeAll')}></DeleteAllButtons>
+                    <MarkAllTodosAsCheckedButtons  onClick={() => handleClick('markAllChecked')}></MarkAllTodosAsCheckedButtons>
+                    <Button onClick={() => handleClick('importTasks')}>Import task</Button>
+                    </div>   
+                    
+                </div>
+                <div className="todo-list">
+                    {isLoading ? <p>Loading...</p> : memoizedTodoItem}
+                    
+                </div>
+            </>
+        );
+    }
+
+    export default ToDo;
