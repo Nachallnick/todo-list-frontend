@@ -1,7 +1,6 @@
 import * as React from 'react';
 import Button from '@mui/material/Button';
 import DeleteIcon from '@mui/icons-material/Delete';
-
 import Stack from '@mui/material/Stack';
 import { Box } from '@mui/material';
 
@@ -17,20 +16,24 @@ interface DeleteAllButtonsProps {
 
 export const DeleteAllButtons: React.FC<DeleteAllButtonsProps> = ({ onClick }) => {
   return (
-    <Stack spacing={1} direction="row">
+    <Stack spacing={1} direction="row" style={{marginTop: 50,}}>
     
     <Button 
     variant="outlined"
      onClick={onClick}
-     style={{
+     sx={{
       backgroundColor: 'rgba(213, 198, 178, 0.822)',
       border: 'none',
       color: 'white',
-      display: 'flex', ////  Используем flexbox для выравнивания содержимого
-      justifyContent: 'space-between', // //Распределяем содержимое по краям
-      width: 'auto', //// Ширина по содержимому //
-      marginTop: 50,
+      display: 'flex', 
+      justifyContent: 'space-between', 
+      width: 'auto', 
       
+      '&:hover': {
+        backgroundColor: 'rgba(213, 198, 178, 0.922)', 
+        border: 'none',
+       
+      },
      }}
      >
       <Box sx={{

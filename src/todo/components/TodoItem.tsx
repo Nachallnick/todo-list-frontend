@@ -83,8 +83,8 @@ const TodoItem: React.FC<TodoItemProps> = ({ todo, index, setCheckedToDo, remove
         <Button className="save" onClick={handleSave}>Save</Button>
     ) : (
         <>
-            <UpdateButtons  onClick={handleToggleEdit}>Update</UpdateButtons>
-            <ComplitedButtons onClick={() => setCheckedToDo(todo.id)} isChecked={todo.isChecked}>Complete</ComplitedButtons>
+            <UpdateButtons  onClick={handleToggleEdit}></UpdateButtons>
+            <ComplitedButtons onClick={() => setCheckedToDo(todo.id)} isChecked={todo.isChecked}></ComplitedButtons>
             <DeleteButtons onClick={() => removeTodo(todo.id)}>Delete</DeleteButtons>
         </>
     )}

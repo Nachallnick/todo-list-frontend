@@ -21,16 +21,20 @@ interface MarkAllTodosAsCheckedButtonsProps {
 export const MarkAllTodosAsCheckedButtons: React.FC<MarkAllTodosAsCheckedButtonsProps> = ({ onClick }) =>  {
   
 return (
-    <Stack spacing={2} direction="row">
+    <Stack spacing={2} direction="row" style={{marginTop: 50,}}>
     
     <Button 
     variant="outlined"
      onClick={onClick}
-     style={{
+     sx={{
       backgroundColor: 'rgba(213, 198, 178, 0.822)',
       border: 'none',
       color: 'white',
-      marginTop: 50,
+      
+      '&:hover': {
+        backgroundColor: 'rgba(213, 198, 178, 0.922)', 
+        border: 'none',
+      },
      }}
      >Complete All</Button>
     </Stack>
@@ -61,9 +65,11 @@ export default function ComplitedButtons({ onClick, isChecked}: ComplitedButtons
       <Button 
       variant="contained" 
       onClick={handleButtonClick}
-      style={{
+      sx={{
         backgroundColor: isActive ? 'green' : 'rgba(213, 198, 178, 0.822)',
-        marginTop: 50,
+        '&:hover': {
+          backgroundColor: 'rgba(213, 198, 178, 0.922)', 
+        },
       }}
       
       >Complete</Button>

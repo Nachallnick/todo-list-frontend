@@ -43,10 +43,11 @@ h1 {
     align-items: center; 
     justify-content: space-between; 
     padding: 5px 10px;
-    box-shadow: 0 3px 5px rgba(0, 0, 0, .1);
+    box-shadow: 0 3px 5px rgba(211, 207, 207, 0.1);
     margin: 10px 0;
     width: 100%;
     border-radius: 5px;
+    background-color: rgba(49, 47, 43, 0.371);
 }
 
 

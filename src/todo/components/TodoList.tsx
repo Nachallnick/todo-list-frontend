@@ -3,12 +3,13 @@
     import TodoItem from "./TodoItem";
     import { DEFAULT_TODO_ITEM, ITodoItem, createNewTodo } from "./const";
     import { getList } from "./api";
+
+    
     import MultilineTextFields from "../mui_appka/inputs";
     import { MarkAllTodosAsCheckedButtons } from "../mui_appka/buttons/buttonComplite";
-    import Button from '@mui/material/Button'
-    import DeleteIcon from '@mui/icons-material/Delete';
     import { DeleteAllButtons } from "../mui_appka/buttons/deleteButtons";
-
+    import AddTaskButtons from "../mui_appka/buttons/AddTaskButtons";
+    import ImportTaskButtons from "../mui_appka/buttons/importTaskButtons";
 
     const ToDo = () => {
         
@@ -38,7 +39,7 @@
         }, [todos])
 
         const handleAddTask = (e: React.FormEvent) => {
-            e.preventDefault()
+        
         if (title.trim()) {
         
             const newTodo = createNewTodo(title, description)
@@ -115,14 +116,14 @@
                             onTitleChange={(e) => setTitle(e.target.value)}
                             onDescriptionChange={(e) => setDescription(e.target.value)}
                             titleValue={title}
-                            description={description} isEditing={undefined}                />
-                    <Button type="submit">Add task</Button> 
+                            description={description} isEditing={undefined}/>
+                    <AddTaskButtons onAddTask={handleAddTask}></AddTaskButtons> 
                     </form>
                     
                  <div className="buttons">
                     <DeleteAllButtons onClick={() => handleClick('removeAll')}></DeleteAllButtons>
                     <MarkAllTodosAsCheckedButtons  onClick={() => handleClick('markAllChecked')}></MarkAllTodosAsCheckedButtons>
-                    <Button onClick={() => handleClick('importTasks')}>Import task</Button>
+                    <ImportTaskButtons onImportTasks={() => handleClick('importTasks')}></ImportTaskButtons>
                     </div>   
                     
                 </div>

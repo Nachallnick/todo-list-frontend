@@ -27,6 +27,9 @@ export default function MultilineTextFields({ onTitleChange, onDescriptionChange
       '&.Mui-focused': { // Цвет лейбла при фокусе
         color: 'rgba(213, 198, 178, 0.822)', 
       },
+      '& .MuiInputBase-input': { // Добавляем стили для текста внутри инпута
+        color: 'rgba(213, 198, 178, 0.822)', // Цвет текста
+      },
     },
   };
 
@@ -40,6 +43,7 @@ export default function MultilineTextFields({ onTitleChange, onDescriptionChange
       }}
       noValidate
       autoComplete="off"
+      
     >
 
       <div style={{ display: 'flex', flexDirection: 'row' }}>
@@ -52,6 +56,12 @@ export default function MultilineTextFields({ onTitleChange, onDescriptionChange
           value={titleValue}
           onChange={(e) => onTitleChange(e)}
           sx={inputStyles}
+          InputLabelProps={{
+            style: { color: 'rgba(213, 198, 178, 0.822)' },
+          }}
+          inputProps={{
+            style: { color: 'rgba(213, 198, 178, 0.822)' }, // Применение стиля непосредственно к input
+          }}
         />
         
         <TextField
@@ -64,6 +74,12 @@ export default function MultilineTextFields({ onTitleChange, onDescriptionChange
           value={description}
           onChange={(e) => onDescriptionChange(e)}
           sx={inputStyles}
+          InputLabelProps={{
+            style: { color: 'rgba(213, 198, 178, 0.822)' },
+          }}
+          inputProps={{
+            style: { color: 'rgba(213, 198, 178, 0.822)' }, // Применение стиля непосредственно к input
+          }}
         />
       </div>
     

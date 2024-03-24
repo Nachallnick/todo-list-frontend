@@ -19,7 +19,11 @@ const UpdateButtons: React.FC<UpdateButtonsProps> = ({ onClick}) =>  {
       color="secondary" 
       aria-label="edit"
       onClick={onClick}
-      style={{
+      sx={{
+        backgroundColor: 'rgba(213, 198, 178, 0.822)',
+        '&:hover': {
+          backgroundColor: 'rgba(213, 198, 178, 0.922)', 
+        },
         width: '36px', 
         height: '36px',
         
