@@ -1,5 +1,12 @@
 import React, { useState } from "react";
 import { ITodoItem } from "./const";
+import ComplitedButtons from "../mui_appka/buttons/buttonComplite";
+import Button from '@mui/material/Button'
+import DeleteButtons from "../mui_appka/buttons/deleteButtons";
+import MultilineTextFields from "../mui_appka/inputs";
+import UpdateButtons from "../mui_appka/buttons/updateButtons";
+
+
 
 
 interface TodoItemProps {
@@ -28,6 +35,8 @@ const TodoItem: React.FC<TodoItemProps> = ({ todo, index, setCheckedToDo, remove
 
     const handleToggleEdit = () => {       
        setIsEditing(!isEditing)
+       setEditText(todo.title)
+       setEditDescription(todo.description)
     };
 
     const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -45,13 +54,19 @@ const TodoItem: React.FC<TodoItemProps> = ({ todo, index, setCheckedToDo, remove
         })
     }
 
+
     return (
-        <>     
+        
+        <div className="todo-item">
          <div className="todo-content">
              {isEditing ? (
                  <> 
-                     <input className="input-group" type="text" value={editText} onChange={handleTitleChange} />
-                     <textarea className="input-group" value={editDescription} onChange={handleDescriptionChange} />
+                     <MultilineTextFields 
+                            onTitleChange={handleTitleChange}
+                            onDescriptionChange={handleDescriptionChange}
+                            titleValue={editText}
+                            description={editDescription}
+                            isEditing={true}                    />
                  </>
              ) : (
                  <>
@@ -65,16 +80,17 @@ const TodoItem: React.FC<TodoItemProps> = ({ todo, index, setCheckedToDo, remove
  
          <div className="buttons">
     {isEditing ? (
-        <button className="save" onClick={handleSave}>Save</button>
+        <Button className="save" onClick={handleSave}>Save</Button>
     ) : (
         <>
-            <button className="update" onClick={handleToggleEdit}>Update</button>
-            <button className={`toggle-btn ${todo.isChecked ? 'completed' : ''}`} onClick={() => setCheckedToDo(todo.id)}>Complete</button>
-            <button className="delete" onClick={() => removeTodo(todo.id)}>Delete</button>
+            <UpdateButtons  onClick={handleToggleEdit}>Update</UpdateButtons>
+            <ComplitedButtons onClick={() => setCheckedToDo(todo.id)} isChecked={todo.isChecked}>Complete</ComplitedButtons>
+            <DeleteButtons onClick={() => removeTodo(todo.id)}>Delete</DeleteButtons>
         </>
     )}
 </div>
-        </>
+            </div>     
+        
      );
     }
 
