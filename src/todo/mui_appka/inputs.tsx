@@ -2,7 +2,12 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 
-export default function MultilineTextFields({ onTitleChange, onDescriptionChange, titleValue, description, isEditing }) {
+
+
+
+
+
+const MultilineTextFields = ({ onTitleChange, onDescriptionChange, titleValue, description, isEditing }) => {
 
   const inputStyles = {
     '& .MuiTextField-root': {
@@ -87,3 +92,5 @@ export default function MultilineTextFields({ onTitleChange, onDescriptionChange
     </Box>
   );
 }
+
+export default MultilineTextFields

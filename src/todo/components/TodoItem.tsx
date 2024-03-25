@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { useTodos } from "../contexts/TodoContext";
 import { ITodoItem } from "./const";
 import ComplitedButtons from "../mui_appka/buttons/buttonComplite";
 import Button from '@mui/material/Button'
@@ -11,17 +12,17 @@ import UpdateButtons from "../mui_appka/buttons/updateButtons";
 
 interface TodoItemProps {
     todo: ITodoItem;
-    index: number;
-    setCheckedToDo: (id: number) => void;
-    removeTodo: (id: number) => void;
-    editTodo: (id: number, title: string, description: string) => void
+    index: number
 }
 
-const TodoItem: React.FC<TodoItemProps> = ({ todo, index, setCheckedToDo, removeTodo, editTodo }) => {
+const TodoItem: React.FC<TodoItemProps> = ({ todo, index }) => {
+    const { setCheckedToDo, removeTodo, editTodo } = useTodos() 
     const [isEditing, setIsEditing] = useState<boolean>(false);
     const [editText, setEditText] = useState<string>(todo.title);
-    const [editMode, setEditMode] = useState<string | null>(null);
     const [editDescription, setEditDescription] = useState<string>(todo.description);
+    const [editMode, setEditMode] = useState<string | null>(null)
+
+
     const handleEdit = (part: string) => {
         setEditMode(part)
     }

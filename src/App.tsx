@@ -1,4 +1,7 @@
 import React from 'react';
+
+
+import { TodoProvider } from './todo/contexts/TodoContext';
 import './App.css';
 import './todo/components/TodoItem.css'
 import ToDo from './todo/components/TodoList'
@@ -11,9 +14,9 @@ import '@fontsource/roboto/700.css';
 
 function App() {
   return (
-    <div>
+    <TodoProvider>
       <ToDo />
-    </div>
+    </TodoProvider>
   )
 }
 
