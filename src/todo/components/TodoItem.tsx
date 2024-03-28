@@ -6,7 +6,7 @@ import Button from '@mui/material/Button'
 import DeleteButtons from "../mui_appka/buttons/deleteButtons";
 import MultilineTextFields from "../mui_appka/inputs";
 import UpdateButtons from "../mui_appka/buttons/updateButtons";
-
+import SaveButtons from "../mui_appka/buttons/saveButtons";
 
 
 
@@ -67,7 +67,9 @@ const TodoItem: React.FC<TodoItemProps> = ({ todo, index }) => {
                             onDescriptionChange={handleDescriptionChange}
                             titleValue={editText}
                             description={editDescription}
-                            isEditing={true}                    />
+                            isEditing={true} 
+                            
+                                            />
                  </>
              ) : (
                  <>
@@ -81,7 +83,7 @@ const TodoItem: React.FC<TodoItemProps> = ({ todo, index }) => {
  
          <div className="buttons">
     {isEditing ? (
-        <Button className="save" onClick={handleSave}>Save</Button>
+        <SaveButtons onClick={handleSave}></SaveButtons>
     ) : (
         <>
             <UpdateButtons  onClick={handleToggleEdit}></UpdateButtons>

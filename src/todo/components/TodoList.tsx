@@ -9,7 +9,7 @@ import AddTaskButtons from "../mui_appka/buttons/AddTaskButtons";
 import ImportTaskButtons from "../mui_appka/buttons/importTaskButtons";
 
     const ToDo = () => {
-        const { todos, isLoading, addTask, setCheckedToDo, removeTodo, editTodo } = useTodos() 
+        const { todos, isLoading, addTask, setCheckedToDo, removeTodo, editTodo, importTasks, removeAll, markAllChecked } = useTodos() 
         const [title, setTitle] = useState('')
         const [description, setDescription] = useState('')
 
@@ -25,27 +25,28 @@ import ImportTaskButtons from "../mui_appka/buttons/importTaskButtons";
         }
         }
 
-        const handleClick = (action: string) => {
-            switch(action) {
-                case 'removeAll':
-                    todos.forEach(todo => removeTodo(todo.id))
-                    break;
-                case 'markAllChecked':
-                    todos.forEach(todo => setCheckedToDo(todo.id))
-                    break
-                case 'importTasks':
-                    break
-                default:
-                    console.log('action not recognized')
-            }
-        }
+        // const handleClick = (action: string) => {
+        //     switch(action) {
+        //         case 'removeAll':
+        //             todos.forEach(todo => removeTodo(todo.id))
+        //             break;
+        //         case 'markAllChecked':
+        //             todos.forEach(todo => setCheckedToDo(todo.id))
+        //             break
+        //         case 'importTasks':
+        //             setImportTrigger(true)
+        //             break
+        //         default:
+        //             console.log('action not recognized')
+        //     }
+        // }
 
         return (
             <>
-                <div className="top-bar" style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap' }}>
+                <div className="top-bar" style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', }}>
                     <h1>Task application</h1>
                     
-                    <form onSubmit={handleAddTask} className="input-group" style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', flexWrap: 'wrap', flexGrow: 1 }}>
+                    <form onSubmit={handleAddTask} className="input-group" style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', flexWrap: 'wrap', flexGrow: 1, marginTop: '100px',}}>
                 <MultilineTextFields 
                             onTitleChange={(e) => setTitle(e.target.value)}
                             onDescriptionChange={(e) => setDescription(e.target.value)}
@@ -56,9 +57,9 @@ import ImportTaskButtons from "../mui_appka/buttons/importTaskButtons";
                     </form>
                     
                  <div className="buttons">
-                    <DeleteAllButtons onClick={() => handleClick('removeAll')}></DeleteAllButtons>
-                    <MarkAllTodosAsCheckedButtons  onClick={() => handleClick('markAllChecked')}></MarkAllTodosAsCheckedButtons>
-                    <ImportTaskButtons onImportTasks={() => handleClick('importTasks')}></ImportTaskButtons>
+                    <DeleteAllButtons onClick={removeAll}></DeleteAllButtons>
+                    <MarkAllTodosAsCheckedButtons  onClick={markAllChecked}></MarkAllTodosAsCheckedButtons>
+                    <ImportTaskButtons onImportTasks={importTasks}></ImportTaskButtons>
                     </div>   
                     
                 </div>

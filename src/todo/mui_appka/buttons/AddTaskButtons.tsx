@@ -9,7 +9,7 @@ interface AddTaskButtonsProps {
 
 const AddTaskButtons: React.FC<AddTaskButtonsProps> = ({onAddTask}) => {
   return (
-    <Stack spacing={2} direction="row" sx={{ml: '500px', mt: '7px'}}>
+    <Stack spacing={2} direction="row" sx={{position: 'relative', mt: 1, mr: 10}}>
  
       <Button 
       variant="contained" 

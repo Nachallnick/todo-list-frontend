@@ -11,6 +11,10 @@
         setCheckedToDo: (id: number) => void;
         removeTodo: (id: number) => void;
         editTodo: (id: number, title: string, description: string) => void;
+        importTasks: () => void;
+        removeAll: () => void;
+        markAllChecked: () => void
+        
     }
 
     const TodoContext = createContext<TodoContextType  | undefined>(undefined)
@@ -30,18 +34,49 @@
     export const TodoProvider: FC<Props>= ({ children }) => {
         const [todos, setTodos] = useState<ITodoItem[]>([])
         const [isLoading, setIsLoading] = useState<boolean>(false)
+        const [importTrigger, setImportTrigger] = useState(false)
 
         useEffect(() => {
-            setIsLoading(true)
-            getList()
-                .then((storedTodos) => {
-                    if(storedTodos.length > 0) {
-                        setTodos(storedTodos)
-                    }
-                })
-                .catch((error) => console.error('Failed to load todos: ', error))
-                .finally(() => setIsLoading(false))
-        }, [])
+            if (!importTrigger) return;
+            const loadTask = async () => {
+                try {
+                    setIsLoading(true)
+                    const newTasks = await getList()
+                    setTodos((prevTodos) => [...prevTodos, ...newTasks])
+                    setIsLoading(false)
+                } catch (error) {
+                    console.error(error)
+                    setIsLoading(false)
+                } finally {
+                    setImportTrigger(false)
+                }
+            }
+            loadTask()
+        }, [importTrigger])
+
+        // useEffect(() => {
+        //     setIsLoading(true)
+        //     getList()
+        //         .then((storedTodos) => {
+        //             if(storedTodos.length > 0) {
+        //                 setTodos(storedTodos)
+        //             }
+        //         })
+        //         .catch((error) => console.error('Failed to load todos: ', error))
+        //         .finally(() => setIsLoading(false))
+        // }, [])
+
+        const importTasks = () => {
+        setImportTrigger(true)
+        }
+
+        const removeAll = () => {
+            setTodos([])
+        }
+
+        const markAllChecked = () => {
+            setTodos(todos => todos.map(todo => ({ ...todo, isChecked: true})))
+        }
 
         const addTask = (title: string, description: string) => {
             const newTodo = createNewTodo(title, description)
@@ -65,6 +100,6 @@
         }
 
         return (
-            <TodoContext.Provider value={{ todos, isLoading, addTask, setCheckedToDo, removeTodo, editTodo }}>{children}</TodoContext.Provider>
+            <TodoContext.Provider value={{ todos, isLoading, addTask, setCheckedToDo, removeTodo, editTodo, importTasks, removeAll, markAllChecked }}>{children}</TodoContext.Provider>
         )
     }

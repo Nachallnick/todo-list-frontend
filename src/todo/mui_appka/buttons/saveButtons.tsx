@@ -3,17 +3,19 @@ import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 
 
-interface ImportTaskButtonsProps {
-    onImportTasks: () => void
+interface SaveButtonsProps {
+    
+    onClick: () => void
+    children?: React.ReactNode;
 }
 
-const ImportTaskButtons: React.FC<ImportTaskButtonsProps> = ({onImportTasks}) => {
+const SaveButtons: React.FC<SaveButtonsProps> = ({onClick, }) => {
   return (
-    <Stack spacing={2} direction="row" style={{position: 'absolute', right: 0, top: '50px', marginRight: '110px'}}>
+    <Stack spacing={2} direction="row" sx={{ml: '500px', mt: '7px'}}>
  
       <Button 
       variant="contained" 
-      onClick={onImportTasks}
+      onClick={onClick}
       sx={{
         backgroundColor: 'rgba(213, 198, 178, 0.822)', 
         '&:hover': {
@@ -22,10 +24,10 @@ const ImportTaskButtons: React.FC<ImportTaskButtonsProps> = ({onImportTasks}) =>
         
       
       }}
-      >Import Task</Button>
+      >Save</Button>
      
     </Stack>
   );
 }
 
-export default ImportTaskButtons
+export default SaveButtons

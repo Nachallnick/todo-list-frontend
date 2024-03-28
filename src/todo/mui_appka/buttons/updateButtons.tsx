@@ -24,6 +24,7 @@ const UpdateButtons: React.FC<UpdateButtonsProps> = ({ onClick}) =>  {
         '&:hover': {
           backgroundColor: 'rgba(213, 198, 178, 0.922)', 
         },
+        
         width: '36px', 
         height: '36px',
         

@@ -21,7 +21,7 @@ interface MarkAllTodosAsCheckedButtonsProps {
 export const MarkAllTodosAsCheckedButtons: React.FC<MarkAllTodosAsCheckedButtonsProps> = ({ onClick }) =>  {
   
 return (
-    <Stack spacing={2} direction="row" style={{marginTop: 50,}}>
+    <Stack spacing={2} direction="row" style={{position: 'absolute', right: 0, top: '50px', marginRight: '250px'}}>
     
     <Button 
     variant="outlined"

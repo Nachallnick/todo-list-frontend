@@ -16,7 +16,7 @@ interface DeleteAllButtonsProps {
 
 export const DeleteAllButtons: React.FC<DeleteAllButtonsProps> = ({ onClick }) => {
   return (
-    <Stack spacing={1} direction="row" style={{marginTop: 50,}}>
+    <Stack spacing={1} direction="row" style={{position: 'absolute', right: 0, top: '50px', marginRight: '400px'}}>
     
     <Button 
     variant="outlined"
@@ -25,9 +25,7 @@ export const DeleteAllButtons: React.FC<DeleteAllButtonsProps> = ({ onClick }) =
       backgroundColor: 'rgba(213, 198, 178, 0.822)',
       border: 'none',
       color: 'white',
-      display: 'flex', 
-      justifyContent: 'space-between', 
-      width: 'auto', 
+      
       
       '&:hover': {
         backgroundColor: 'rgba(213, 198, 178, 0.922)', 

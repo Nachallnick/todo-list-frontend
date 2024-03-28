@@ -1,6 +1,7 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
+import { SxProps } from '@mui/material';
 
 
 
@@ -11,8 +12,10 @@ const MultilineTextFields = ({ onTitleChange, onDescriptionChange, titleValue, d
 
   const inputStyles = {
     '& .MuiTextField-root': {
-      m: 3,
-      width: '100%', 
+      m: 2,
+      //  mt: 12,
+      
+       
     },
     '& .MuiOutlinedInput-root': {
       borderRadius: '10px', 
@@ -37,6 +40,8 @@ const MultilineTextFields = ({ onTitleChange, onDescriptionChange, titleValue, d
       },
     },
   };
+
+
 
   return (
     <Box
@@ -67,6 +72,7 @@ const MultilineTextFields = ({ onTitleChange, onDescriptionChange, titleValue, d
           inputProps={{
             style: { color: 'rgba(213, 198, 178, 0.822)' }, // Применение стиля непосредственно к input
           }}
+         
         />
         
         <TextField
